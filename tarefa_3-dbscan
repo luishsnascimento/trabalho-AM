@@ -1,0 +1,212 @@
+import React, { useState } from 'react';
+
+const DBSCANExercises = () => {
+  const [currentExercise, setCurrentExercise] = useState(1);
+  const [eps, setEps] = useState(0.3);
+  const [minSamples, setMinSamples] = useState(5);
+  const [result, setResult] = useState(null);
+
+  const runExercise1 = () => {
+    setResult(`Executando DBSCAN com eps=${eps} e min_samples=${minSamples}...`);
+  };
+
+  return (
+    <div style={{ padding: '30px', fontFamily: 'Inter, sans-serif' }}>
+      <h1 style={{ color: '#4b5563', fontSize: '24px', fontWeight: '700', marginBottom: '20px' }}>
+        Exercícios Interativos - DBSCAN
+      </h1>
+
+      {/* Navegação entre exercícios */}
+      <div style={{ display: 'flex', gap: '15px', marginBottom: '25px' }}>
+        {[1, 2, 3].map((num) => (
+          <button
+            key={num}
+            onClick={() => {
+              setCurrentExercise(num);
+              setResult(null);
+            }}
+            style={{
+              padding: '10px 20px',
+              backgroundColor: currentExercise === num ? '#8b5cf6' : '#e5e7eb',
+              color: currentExercise === num ? 'white' : '#374151',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontWeight: '600',
+              transition: 'all 0.2s',
+            }}
+          >
+            Exercício {num}
+          </button>
+        ))}
+      </div>
+
+      {/* Exercício 1: Ajuste de Parâmetros */}
+      {currentExercise === 1 && (
+        <div>
+          <h3 style={{ color: '#4b5563', fontSize: '18px', marginBottom: '15px' }}>
+            1️⃣ Ajuste de Parâmetros do DBSCAN
+          </h3>
+
+          <p style={{ color: '#6b7280', marginBottom: '20px', lineHeight: '1.6' }}>
+            Ajuste os parâmetros <strong>eps</strong> e <strong>min_samples</strong> e observe
+            como eles afetam a formação dos clusters.
+          </p>
+
+          <div style={{ display: 'flex', gap: '25px', alignItems: 'center', marginBottom: '25px' }}>
+            <div>
+              <label style={{ color: '#4b5563', fontWeight: '600', marginRight: '10px' }}>eps:</label>
+              <input
+                type="range"
+                min="0.1"
+                max="1.0"
+                step="0.05"
+                value={eps}
+                onChange={(e) => setEps(parseFloat(e.target.value))}
+                style={{ width: '200px' }}
+              />
+              <span style={{ marginLeft: '10px', color: '#6b7280' }}>{eps.toFixed(2)}</span>
+            </div>
+
+            <div>
+              <label style={{ color: '#4b5563', fontWeight: '600', marginRight: '10px' }}>
+                min_samples:
+              </label>
+              <input
+                type="number"
+                min="3"
+                max="20"
+                value={minSamples}
+                onChange={(e) => setMinSamples(parseInt(e.target.value))}
+                style={{
+                  width: '80px',
+                  padding: '5px',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '4px',
+                }}
+              />
+            </div>
+
+            <button
+              onClick={runExercise1}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#8b5cf6',
+                color: 'white',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontWeight: '600',
+              }}
+            >
+              Executar DBSCAN
+            </button>
+          </div>
+
+          {result && (
+            <div
+              style={{
+                backgroundColor: '#f3f4f6',
+                padding: '15px',
+                borderRadius: '8px',
+                color: '#374151',
+                fontWeight: '500',
+              }}
+            >
+              {result}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Exercício 2 */}
+      {currentExercise === 2 && (
+        <div>
+          <h3 style={{ color: '#4b5563', fontSize: '18px', marginBottom: '15px' }}>
+            2️⃣ Identificação de Clusters
+          </h3>
+          <p style={{ color: '#6b7280', marginBottom: '20px', lineHeight: '1.6' }}>
+            Este exercício mostra como o DBSCAN identifica regiões de alta densidade. 
+            Imagine um conjunto de pontos que representa diferentes áreas urbanas: o algoritmo
+            deve agrupar os pontos densos e marcar os pontos isolados como ruído.
+          </p>
+
+          <button
+            onClick={() => setResult('DBSCAN executado — clusters formados!')}
+            style={{
+              padding: '10px 20px',
+              backgroundColor: '#8b5cf6',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontWeight: '600',
+            }}
+          >
+            Rodar exemplo
+          </button>
+
+          {result && (
+            <div
+              style={{
+                backgroundColor: '#f3f4f6',
+                padding: '15px',
+                borderRadius: '8px',
+                color: '#374151',
+                fontWeight: '500',
+                marginTop: '20px',
+              }}
+            >
+              {result}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Exercício 3 */}
+      {currentExercise === 3 && (
+        <div>
+          <h3 style={{ color: '#4b5563', fontSize: '18px', marginBottom: '15px' }}>
+            3️⃣ Pontos de Ruído
+          </h3>
+          <p style={{ color: '#6b7280', marginBottom: '20px', lineHeight: '1.6' }}>
+            O DBSCAN classifica como ruído os pontos que não pertencem a nenhum cluster.
+            Ajuste os parâmetros no exercício 1 para ver quando um ponto se torna ruído.
+          </p>
+
+          <button
+            onClick={() => setResult('DBSCAN executado — pontos de ruído detectados!')}
+            style={{
+              padding: '10px 20px',
+              backgroundColor: '#8b5cf6',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontWeight: '600',
+            }}
+          >
+            Mostrar ruídos
+          </button>
+
+          {result && (
+            <div
+              style={{
+                backgroundColor: '#f3f4f6',
+                padding: '15px',
+                borderRadius: '8px',
+                color: '#374151',
+                fontWeight: '500',
+                marginTop: '20px',
+              }}
+            >
+              {result}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default DBSCANExercises;
